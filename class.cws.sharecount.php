@@ -18,6 +18,8 @@
  * 
  * Please see the GNU General Public License at http://www.gnu.org/licenses/.
  * 
+ * Related post : http://goo.gl/iKGRT
+ * 
  * @package CwsShareCount
  * @author Cr@zy
  * @copyright 2013, Cr@zy

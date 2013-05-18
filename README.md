@@ -11,6 +11,8 @@ Installation
 * Copy the ``class.cws.sharecount.php`` file in a folder on your server.
 * Go to ``index.php`` to see an example.
 
+![](http://static.crazyws.fr/resources/blog/2013/05/cwssharecount-social-network-count.png)
+
 Getting started
 ---------------
 
@@ -41,3 +43,8 @@ Public methods :
 
 * **getAll** - Get all social share count.
 * **getCount** - Get social share count.
+
+More infos
+----------
+
+http://www.crazyws.fr/dev/classes-php/cwssharecount-recupere-le-nombre-de-partages-pour-reseaux-sociaux-SZXP0.html
