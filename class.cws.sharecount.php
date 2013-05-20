@@ -24,7 +24,7 @@
  * @author Cr@zy
  * @copyright 2013, Cr@zy
  * @license GPL licensed
- * @version 1.0
+ * @version 1.1
  * @link https://github.com/crazy-max/CwsShareCount
  *
  */
@@ -49,14 +49,14 @@ class CwsShareCount
      * CwsShareCount version.
      * @var string
      */
-    public $version = "1.0";
+    public $version = "1.1";
     
     /**
      * Control the debug output.
-     * default CWSSC_VERBOSE_SIMPLE
+     * default CWSSC_VERBOSE_QUIET
      * @var int
      */
-    public $debug_verbose = CWSSC_VERBOSE_SIMPLE;
+    public $debug_verbose = CWSSC_VERBOSE_QUIET;
     
     /**
      * The last error message.
@@ -148,7 +148,6 @@ class CwsShareCount
         $this->output('<strong>URL : </strong>' . $url, CWSSC_VERBOSE_SIMPLE);
         
         $cwsCurl = new CwsCurl();
-        $cwsCurl->setDebugVerbose(CWSCURL_VERBOSE_QUIET);
         $cwsCurl->addOption(CURLOPT_HTTPHEADER, array('Content-type:application/json'));
         
         $api_url = null;

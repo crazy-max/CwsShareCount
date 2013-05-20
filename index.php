@@ -6,7 +6,7 @@ include('class.cws.sharecount.php');
 include('class.cws.curl.php');
 
 $cwsShareCount = new CwsShareCount();
-$cwsShareCount->debug_verbose = CWSSC_VERBOSE_DEBUG; // default : CWSSC_VERBOSE_SIMPLE
+$cwsShareCount->debug_verbose = CWSSC_VERBOSE_DEBUG; // default : CWSSC_VERBOSE_QUIET
 
 $result = $cwsShareCount->getAll("http://plus.google.com");
 
