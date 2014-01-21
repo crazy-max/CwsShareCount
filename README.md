@@ -1,10 +1,8 @@
-CwsShareCount
-=============
+# CwsShareCount
 
 CwsShareCount is a PHP class to get social share count for Delicious, Facebook, Google+, Linkedin, Pinterest, Reddit, StumbleUpon and Twitter.
 
-Installation
-------------
+## Installation
 
 * Enable the [php_curl](http://php.net/manual/en/book.curl.php) extension.
 * Download and copy the [CwsCurl](https://github.com/crazy-max/CwsCurl) wrapper PHP class.
@@ -13,8 +11,7 @@ Installation
 
 ![](http://static.crazyws.fr/resources/blog/2013/05/cwssharecount-social-network-count.png)
 
-Getting started
----------------
+## Getting started
 
 ```php
 <?php
@@ -32,8 +29,7 @@ $result = $cwsShareCount->getAll("http://plus.google.com");
 ?>
 ```
 
-Options
--------
+## Options
 
 Public vars :
 
@@ -44,7 +40,10 @@ Public methods :
 * **getAll** - Get all social share count.
 * **getCount** - Get social share count.
 
-More infos
-----------
+## License
+
+LGPL. See ``LICENSE`` for more details.
+
+## More infos
 
 http://www.crazyws.fr/dev/classes-php/cwssharecount-recupere-le-nombre-de-partages-pour-reseaux-sociaux-SZXP0.html
