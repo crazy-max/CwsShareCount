@@ -23,94 +23,46 @@
  * 
  * @package CwsShareCount
  * @author Cr@zy
- * @copyright 2013-2014, Cr@zy
+ * @copyright 2013-2015, Cr@zy
  * @license GNU LESSER GENERAL PUBLIC LICENSE
- * @version 1.2
+ * @version 1.3
  * @link https://github.com/crazy-max/CwsShareCount
  *
  */
 
-define('CWSSC_VERBOSE_QUIET',     0); // means no output at all.
-define('CWSSC_VERBOSE_SIMPLE',    1); // means only output simple report.
-define('CWSSC_VERBOSE_REPORT',    2); // means output a detail report.
-define('CWSSC_VERBOSE_DEBUG',     3); // means output detail report as well as debug info.
-
-define('CWSSC_SN_DELICIOUS',      'Delicious');
-define('CWSSC_SN_FACEBOOK',       'Facebook');
-define('CWSSC_SN_GOOGLEPLUS',     'Google+');
-define('CWSSC_SN_LINKEDIN',       'LinkedIn');
-define('CWSSC_SN_PINTEREST',      'Pinterest');
-define('CWSSC_SN_REDDIT',         'Reddit');
-define('CWSSC_SN_STUMBLEUPON',    'StumbleUpon');
-define('CWSSC_SN_TWITTER',        'Twitter');
-
 class CwsShareCount
 {
-    /**
-     * CwsShareCount version.
-     * @var string
-     */
-    public $version = "1.2";
-    
-    /**
-     * Control the debug output.
-     * default CWSSC_VERBOSE_QUIET
-     * @var int
-     */
-    public $debug_verbose = CWSSC_VERBOSE_QUIET;
+    const SN_DELICIOUS = 'Delicious';
+    const SN_FACEBOOK = 'Facebook';
+    const SN_GOOGLEPLUS = 'Google+';
+    const SN_LINKEDIN = 'LinkedIn';
+    const SN_PINTEREST = 'Pinterest';
+    const SN_REDDIT = 'Reddit';
+    const SN_STUMBLEUPON = 'StumbleUpon';
+    const SN_TWITTER = 'Twitter';
     
     /**
      * The last error message.
      * @var string
      */
-    public $error_msg;
+    private $error;
     
     /**
-     * List of available socials networks.
-     * @var array
+     * The cws debug instance.
+     * @var CwsDebug
      */
-    private $_socials_networks = array(
-        CWSSC_SN_DELICIOUS,
-        CWSSC_SN_FACEBOOK,
-        CWSSC_SN_GOOGLEPLUS,
-        CWSSC_SN_LINKEDIN,
-        CWSSC_SN_PINTEREST,
-        CWSSC_SN_REDDIT,
-        CWSSC_SN_STUMBLEUPON,
-        CWSSC_SN_TWITTER,
-    );
+    private $cwsDebug;
     
     /**
-     * Defines new line ending.
-     * @var string
+     * The cws curl instance.
+     * @var CwsCurl
      */
-    private $_newline = "<br />\n";
+    private $cwsCurl;
     
-    /**
-     * Output additional msg for debug.
-     * @param string $msg : if not given, output the last error msg.
-     * @param int $verbose_level : the output level of this message.
-     * @param boolean $newline : insert new line or not.
-     * @param boolean $code : is code or not.
-     */
-    private function output($msg=false, $verbose_level=CWSSC_VERBOSE_SIMPLE, $newline=true, $code=false)
+    public function __construct(CwsDebug $cwsDebug, CwsCurl $cwsCurl)
     {
-        if ($this->debug_verbose >= $verbose_level) {
-            if (empty($msg) && !$code) {
-                echo $this->_newline . '<strong>ERROR :</strong> ' . $this->error_msg;
-            } else {
-                if ($code) {
-                    echo '<textarea style="width:100%;height:300px;">';
-                    print_r($msg);
-                    echo '</textarea>';
-                } else {
-                    echo $msg;
-                }
-            }
-            if ($newline) {
-                echo $this->_newline;
-            }
-        }
+        $this->cwsDebug = $cwsDebug;
+        $this->cwsCurl = $cwsCurl;
     }
     
     /**
@@ -121,158 +73,243 @@ class CwsShareCount
     {
         $result = array();
         
-        foreach ($this->_socials_networks as $social_network) {
-            $result[$social_network] = $this->getCount($url, $social_network);
+        foreach (self::getSocialNetworks() as $socialNetwork) {
+            $result[$socialNetwork] = $this->getCount($url, $socialNetwork);
         }
         
         return $result;
     }
     
     /**
+     * Get delicious share count.
+     * @param string $url
+     */
+    public function getDeliciousCount($url)
+    {
+        return $this->getCount($url, self::SN_DELICIOUS);
+    }
+    
+    /**
+     * Get facebook share count.
+     * @param string $url
+     */
+    public function getFacebookCount($url)
+    {
+        return $this->getCount($url, self::SN_FACEBOOK);
+    }
+    
+    /**
+     * Get google plus share count.
+     * @param string $url
+     */
+    public function getGooglePlusCount($url)
+    {
+        return $this->getCount($url, self::SN_GOOGLEPLUS);
+    }
+    
+    /**
+     * Get linkedin share count.
+     * @param string $url
+     */
+    public function getLinkedinCount($url)
+    {
+        return $this->getCount($url, self::SN_LINKEDIN);
+    }
+    
+    /**
+     * Get pinterest share count.
+     * @param string $url
+     */
+    public function getPinterestCount($url)
+    {
+        return $this->getCount($url, self::SN_PINTEREST);
+    }
+    
+    /**
+     * Get reddit share count.
+     * @param string $url
+     */
+    public function getRedditCount($url)
+    {
+        return $this->getCount($url, self::SN_REDDIT);
+    }
+    
+    /**
+     * Get stumbleupon share count.
+     * @param string $url
+     */
+    public function getStumbleuponCount($url)
+    {
+        return $this->getCount($url, self::SN_STUMBLEUPON);
+    }
+    
+    /**
+     * Get twitter share count.
+     * @param string $url
+     */
+    public function getTwitterCount($url)
+    {
+        return $this->getCount($url, self::SN_TWITTER);
+    }
+    
+    /**
      * Get social share count.
      * @param string $url
-     * @param string $social_network
+     * @param string $socialNetwork
      */
-    public function getCount($url, $social_network)
+    private function getCount($url, $socialNetwork)
     {
-        if (!in_array($social_network, $this->_socials_networks)) {
-            $this->error_msg = "Social network is not valid...";
-            $this->output();
+        if (!in_array($socialNetwork, self::getSocialNetworks())) {
+            $this->error = 'Social network is not valid...';
+            $this->cwsDebug->error($this->error);
             exit();
         } elseif (!$this->isValidUrl($url)) {
-            $this->error_msg = "URL is not valid...";
-            $this->output();
+            $this->error = 'URL is not valid...';
+            $this->cwsDebug->error($this->error);
             exit();
         }
         
-        $this->output('<h2>get ' . $social_network . ' count</h2>', CWSSC_VERBOSE_SIMPLE, false);
-        $this->output('<strong>URL : </strong>' . $url, CWSSC_VERBOSE_SIMPLE);
+        $this->cwsDebug->titleH2('get ' . $socialNetwork . ' count');
+        $this->cwsDebug->labelValue('URL', $url);
         
-        $cwsCurl = new CwsCurl();
-        $cwsCurl->addOption(CURLOPT_HTTPHEADER, array('Content-type:application/json'));
+        $this->cwsCurl->reset();
+        $this->cwsCurl->addOption(CURLOPT_HTTPHEADER, array('Content-type:application/json'));
         
-        $api_url = null;
-        switch ($social_network) {
-            case CWSSC_SN_DELICIOUS:
-                $api_url = "http://feeds.delicious.com/v2/json/urlinfo/data?url=" . urlencode($url);
+        $apiUrl = null;
+        switch ($socialNetwork) {
+            case self::SN_DELICIOUS:
+                $apiUrl = 'http://feeds.delicious.com/v2/json/urlinfo/data?url=' . urlencode($url);
                 break;
-            case CWSSC_SN_FACEBOOK:
-                $api_url = "http://api.ak.facebook.com/restserver.php?v=1.0&method=links.getStats&urls=" . urlencode($url) . "&format=json";
+            case self::SN_FACEBOOK:
+                $apiUrl = 'http://api.ak.facebook.com/restserver.php?v=1.0&method=links.getStats&urls=' . urlencode($url) . '&format=json';
                 break;
-            case CWSSC_SN_GOOGLEPLUS:
-                $api_url = "https://clients6.google.com/rpc?key=AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ";
-                $cwsCurl->setMethod(CWSCURL_METHOD_POST);
-                $cwsCurl->addOption(CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' . $url . '","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]');
+            case self::SN_GOOGLEPLUS:
+                $apiUrl = 'https://clients6.google.com/rpc?key=AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ';
+                $this->cwsCurl->setPostMethod();
+                $this->cwsCurl->addOption(CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' . $url . '","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]');
                 break;
-            case CWSSC_SN_LINKEDIN:
-                $api_url = "http://www.linkedin.com/countserv/count/share?url=" . urlencode($url);
+            case self::SN_LINKEDIN:
+                $apiUrl = 'http://www.linkedin.com/countserv/count/share?url=' . urlencode($url);
                 break;
-            case CWSSC_SN_PINTEREST:
-                $api_url = "http://api.pinterest.com/v1/urls/count.json?callback=receiveCount&url=" . urlencode($url);
+            case self::SN_PINTEREST:
+                $apiUrl = 'http://api.pinterest.com/v1/urls/count.json?callback=receiveCount&url=' . urlencode($url);
                 break;
-            case CWSSC_SN_REDDIT:
-                $api_url = "http://buttons.reddit.com/button_info.json?url=" . urlencode($url);
+            case self::SN_REDDIT:
+                $apiUrl = 'http://buttons.reddit.com/button_info.json?url=' . urlencode($url);
                 break;
-            case CWSSC_SN_STUMBLEUPON:
-                $api_url = "http://www.stumbleupon.com/services/1.01/badge.getinfo?url=" . urlencode($url);
+            case self::SN_STUMBLEUPON:
+                $apiUrl = 'http://www.stumbleupon.com/services/1.01/badge.getinfo?url=' . urlencode($url);
                 break;
-            case CWSSC_SN_TWITTER:
-                $api_url = "http://urls.api.twitter.com/1/urls/count.json?url=" . urlencode($url);
+            case self::SN_TWITTER:
+                $apiUrl = 'http://urls.api.twitter.com/1/urls/count.json?url=' . urlencode($url);
                 break;
         }
         
-        $this->output('<strong>API URL : </strong>' . $api_url, CWSSC_VERBOSE_REPORT);
+        $this->cwsDebug->labelValue('API URL', $apiUrl, CwsDebug::VERBOSE_REPORT);
         
-        $cwsCurl->setUrl($api_url);
-        $cwsCurl->process();
+        $this->cwsCurl->setUrl($apiUrl);
+        $this->cwsCurl->process();
         
-        if ($cwsCurl->getErrorMsg()) {
-            $this->error_msg = $cwsCurl->getErrorMsg();
-            $this->output();
+        if ($this->cwsCurl->getError()) {
+            $this->error = $this->cwsCurl->getError();
+            $this->cwsDebug->error($this->error);
             return false;
         }
         
-        $content = $cwsCurl->getContent();
-        $content = str_replace("\n", "", $content);
-        $content = str_replace(" ", "", $content);
+        $content = str_replace("\n", "", $this->cwsCurl->getContent());
         
-        $this->output('<strong>Content fetched</strong>', CWSSC_VERBOSE_DEBUG);
-        $this->output($content, CWSSC_VERBOSE_DEBUG, false, true);
+        $this->cwsDebug->dump('Content fetched', $content, CwsDebug::VERBOSE_DEBUG);
         
-        $json = $cwsCurl->getContent();
-        switch ($social_network) {
-            case CWSSC_SN_DELICIOUS:
+        $json = $this->cwsCurl->getContent();
+        switch ($socialNetwork) {
+            case self::SN_DELICIOUS:
                 if ($json == '[]') {
                     $json = '[{"total_posts": 0}]';
                 }
-            case CWSSC_SN_LINKEDIN:
-                $json = str_replace("IN.Tags.Share.handleCount(", "", $json);
-                $json = str_replace(");", "", $json);
+            case self::SN_LINKEDIN:
+                $json = str_replace('IN.Tags.Share.handleCount(', '', $json);
+                $json = str_replace(');', '', $json);
                 break;
-            case CWSSC_SN_PINTEREST:
-                $json = str_replace("receiveCount(", "", $json);
+            case self::SN_PINTEREST:
+                $json = str_replace('receiveCount(', '', $json);
                 $json = substr($json, 0, -1);
                 break;
         }
         
         $json = json_decode($json, true);
-        
         if ($json == null || $json === false) {
-            $this->error_msg = "Invalid Json...";
-            $this->output();
+            $this->error = 'Invalid Json...';
+            $this->cwsDebug->error($this->error);
             return false;
         }
         
-        $this->output('<strong>Json</strong>', CWSSC_VERBOSE_REPORT);
-        $this->output($json, CWSSC_VERBOSE_REPORT, false, true);
+        $this->cwsDebug->dump('Json', $json, CwsDebug::VERBOSE_REPORT);
         
         $result = false;
-        switch ($social_network) {
-            case CWSSC_SN_DELICIOUS:
+        switch ($socialNetwork) {
+            case self::SN_DELICIOUS:
                 if (isset($json[0]['total_posts'])) {
                     $result = intval($json[0]['total_posts']);
                 }
                 break;
-            case CWSSC_SN_FACEBOOK:
+            case self::SN_FACEBOOK:
                 if (isset($json[0]['total_count'])) {
                     $result = intval($json[0]['total_count']);
                 }
                 break;
-            case CWSSC_SN_GOOGLEPLUS:
+            case self::SN_GOOGLEPLUS:
                 if (isset($json[0]['result']['metadata']['globalCounts']['count'])) {
                     $result = intval($json[0]['result']['metadata']['globalCounts']['count']);
                 }
                 break;
-            case CWSSC_SN_LINKEDIN:
+            case self::SN_LINKEDIN:
                 if (isset($json['count'])) {
                     $result = intval($json['count']);
                 }
                 break;
-            case CWSSC_SN_PINTEREST:
+            case self::SN_PINTEREST:
                 if (isset($json['count'])) {
                     $result = intval($json['count']);
                 }
                 break;
-            case CWSSC_SN_REDDIT:
-                if (isset($json['data']['children'][0]['data']['score'])) {
-                    $result = intval($json['data']['children'][0]['data']['score']);
+            case self::SN_REDDIT:
+                if (isset($json['data']['children'])) {
+                    if (empty($json['data']['children'])) {
+                        $result = 0;
+                    } elseif (isset($json['data']['children'][0]['data']['score'])) {
+                        $result = intval($json['data']['children'][0]['data']['score']);
+                    }
                 }
                 break;
-            case CWSSC_SN_STUMBLEUPON:
+            case self::SN_STUMBLEUPON:
                 if (isset($json['result']['views'])) {
                     $result = intval($json['result']['views']);
                 }
                 break;
-            case CWSSC_SN_TWITTER:
+            case self::SN_TWITTER:
                 if (isset($json['count'])) {
                     $result = intval($json['count']);
                 }
                 break;
         }
         
-        $this->output('<strong>Count : </strong>' . $result, CWSSC_VERBOSE_SIMPLE);
+        $this->cwsDebug->labelValue('Count', $result);
         
         return $result;
+    }
+    
+    private static function getSocialNetworks()
+    {
+        return array(
+            self::SN_DELICIOUS,
+            self::SN_FACEBOOK,
+            self::SN_GOOGLEPLUS,
+            self::SN_LINKEDIN,
+            self::SN_PINTEREST,
+            self::SN_REDDIT,
+            self::SN_STUMBLEUPON,
+            self::SN_TWITTER,
+        );
     }
     
     private static function isValidUrl($url)
@@ -280,6 +317,13 @@ class CwsShareCount
         return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url) 
             || filter_var(filter_var($url, FILTER_SANITIZE_URL), FILTER_VALIDATE_URL);
     }
-}
 
-?>
+    /**
+     * The last error.
+     * @return the $error
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+}
