@@ -181,7 +181,7 @@ class CwsShareCount
                 $apiUrl = 'http://feeds.delicious.com/v2/json/urlinfo/data?url=' . urlencode($url);
                 break;
             case self::SN_FACEBOOK:
-                $apiUrl = 'http://api.ak.facebook.com/restserver.php?v=1.0&method=links.getStats&urls=' . urlencode($url) . '&format=json';
+                $apiUrl = 'http://api.facebook.com/method/links.getStats?urls=' . urlencode($url) . '&format=json';
                 break;
             case self::SN_GOOGLEPLUS:
                 $apiUrl = 'https://clients6.google.com/rpc?key=AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ';
