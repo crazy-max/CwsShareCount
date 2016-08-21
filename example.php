@@ -15,6 +15,7 @@ require_once '../CwsCurl/class.cws.curl.php';
 $cwsCurl = new CwsCurl(new CwsDebug($cwsDump));
 
 require_once 'class.cws.sharecount.php';
+
 $cwsShareCount = new CwsShareCount($cwsDebug, $cwsCurl);
 
 $result = $cwsShareCount->getAll('https://www.google.com/');

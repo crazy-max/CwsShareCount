@@ -68,6 +68,7 @@ class CwsShareCount
     /**
      * Get all social share count.
      * @param string $url
+     * @return array
      */
     public function getAll($url)
     {
@@ -83,6 +84,7 @@ class CwsShareCount
     /**
      * Get delicious share count.
      * @param string $url
+     * @return int
      */
     public function getDeliciousCount($url)
     {
@@ -92,6 +94,7 @@ class CwsShareCount
     /**
      * Get facebook share count.
      * @param string $url
+     * @return int
      */
     public function getFacebookCount($url)
     {
@@ -101,6 +104,7 @@ class CwsShareCount
     /**
      * Get google plus share count.
      * @param string $url
+     * @return int
      */
     public function getGooglePlusCount($url)
     {
@@ -110,6 +114,7 @@ class CwsShareCount
     /**
      * Get linkedin share count.
      * @param string $url
+     * @return int
      */
     public function getLinkedinCount($url)
     {
@@ -119,6 +124,7 @@ class CwsShareCount
     /**
      * Get pinterest share count.
      * @param string $url
+     * @return int
      */
     public function getPinterestCount($url)
     {
@@ -128,6 +134,7 @@ class CwsShareCount
     /**
      * Get reddit share count.
      * @param string $url
+     * @return int
      */
     public function getRedditCount($url)
     {
@@ -137,6 +144,7 @@ class CwsShareCount
     /**
      * Get stumbleupon share count.
      * @param string $url
+     * @return int
      */
     public function getStumbleuponCount($url)
     {
@@ -146,6 +154,7 @@ class CwsShareCount
     /**
      * Get twitter share count.
      * @param string $url
+     * @return int
      */
     public function getTwitterCount($url)
     {
@@ -156,6 +165,7 @@ class CwsShareCount
      * Get social share count.
      * @param string $url
      * @param string $socialNetwork
+     * @return int
      */
     private function getCount($url, $socialNetwork)
     {
@@ -181,7 +191,7 @@ class CwsShareCount
                 $apiUrl = 'http://feeds.delicious.com/v2/json/urlinfo/data?url=' . urlencode($url);
                 break;
             case self::SN_FACEBOOK:
-                $apiUrl = 'http://api.ak.facebook.com/restserver.php?v=1.0&method=links.getStats&urls=' . urlencode($url) . '&format=json';
+                $apiUrl = "http://graph.facebook.com/?id=" . urlencode($url);
                 break;
             case self::SN_GOOGLEPLUS:
                 $apiUrl = 'https://clients6.google.com/rpc?key=AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ';
@@ -226,6 +236,7 @@ class CwsShareCount
                 if ($json == '[]') {
                     $json = '[{"total_posts": 0}]';
                 }
+                break;
             case self::SN_LINKEDIN:
                 $json = str_replace('IN.Tags.Share.handleCount(', '', $json);
                 $json = str_replace(');', '', $json);
@@ -253,8 +264,8 @@ class CwsShareCount
                 }
                 break;
             case self::SN_FACEBOOK:
-                if (isset($json[0]['total_count'])) {
-                    $result = intval($json[0]['total_count']);
+                if (isset($json['share']['share_count'])) {
+                    $result = intval($json['share']['share_count']);
                 }
                 break;
             case self::SN_GOOGLEPLUS:
@@ -297,7 +308,11 @@ class CwsShareCount
         
         return $result;
     }
-    
+
+    /**
+     * Social networks list
+     * @return array
+     */
     private static function getSocialNetworks()
     {
         return array(
@@ -311,7 +326,12 @@ class CwsShareCount
             self::SN_TWITTER,
         );
     }
-    
+
+    /**
+     * Check if url is valid
+     * @param $url
+     * @return bool
+     */
     private static function isValidUrl($url)
     {
         return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url) 
@@ -320,7 +340,7 @@ class CwsShareCount
 
     /**
      * The last error.
-     * @return the $error
+     * @return string $error
      */
     public function getError()
     {
