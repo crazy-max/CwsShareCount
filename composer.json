@@ -1,0 +1,29 @@
+{
+  "name": "crazy-max/cws-share-count",
+  "type":  "library",
+  "description": "Library to replace var_dump(), print_r() based on the Xdebug style.",
+  "keywords": ["count", "delicious", "facebook", "googleplus", "linkedin", "reddit", "stumbleupon", "twitter"],
+  "homepage": "https://github.com/crazy-max/CwsShareCount",
+  "license": "LGPL",
+  "authors": [
+     {
+        "name": "crazy-max",
+        "homepage": "http://www.crazyws.fr/"
+     }
+  ],
+  "require": {
+    "crazy-max/cws-dump": "*",
+    "crazy-max/cws-debug": "*",
+    "crazy-max/cws-curl": "*"
+  },
+  "require-dev": {
+  },
+  "suggest": {
+  },
+  "autoload": {
+    "classmap": [ "class.cws.sharecount.php"]
+  },
+  "extra": {
+  },
+  "minimum-stability": "dev"
+}
