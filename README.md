@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.org/crazy-max/CwsShareCount.svg?branch=master)](https://travis-ci.org/crazy-max/CwsShareCount) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/crazy-max/CwsShareCount/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/crazy-max/CwsShareCount/?branch=master)
+[![Latest Stable Version](https://img.shields.io/packagist/v/crazy-max/cws-share-count.svg?style=flat-square)](https://packagist.org/packages/crazy-max/cws-share-count)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.3.0-8892BF.svg?style=flat-square)](https://php.net/)
+[![Build Status](https://img.shields.io/travis/crazy-max/CwsShareCount/master.svg?style=flat-square)](https://travis-ci.org/crazy-max/CwsShareCount)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/crazy-max/CwsShareCount.svg?style=flat-square)](https://scrutinizer-ci.com/g/crazy-max/CwsShareCount)
 
 # CwsShareCount
 
@@ -6,7 +9,7 @@ PHP class to get social share count for Delicious, Facebook, Google+, Linkedin, 
 
 ## Requirements
 
-* PHP >= 5.3
+* PHP >= 5.3.0
 * CwsDebug >= 1.8
 * CwsCurl >= 1.8
 * Enable the [php_curl](http://php.net/manual/en/book.curl.php) extension.
