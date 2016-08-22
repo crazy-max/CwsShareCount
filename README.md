@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/crazy-max/CwsShareCount.svg?branch=master)](https://travis-ci.org/crazy-max/CwsShareCount) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/crazy-max/CwsShareCount/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/crazy-max/CwsShareCount/?branch=master)
+
 # CwsShareCount
 
 PHP class to get social share count for Delicious, Facebook, Google+, Linkedin, Pinterest, Reddit, StumbleUpon and Twitter.
