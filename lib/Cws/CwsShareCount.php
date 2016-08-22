@@ -2,33 +2,15 @@
 
 /**
  * CwsShareCount
- *
- * CwsShareCount is a PHP class to get social share count for Delicious, Facebook,
- * Google+, Linkedin, Pinterest, Reddit, StumbleUpon and Twitter.
- * 
- * CwsShareCount is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or (at your option)
- * or (at your option) any later version.
- *
- * CwsShareCount is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see http://www.gnu.org/licenses/.
- * 
- * Related post : http://goo.gl/iKGRT
  * 
  * @package CwsShareCount
  * @author Cr@zy
  * @copyright 2013-2015, Cr@zy
  * @license GNU LESSER GENERAL PUBLIC LICENSE
- * @version 1.3
  * @link https://github.com/crazy-max/CwsShareCount
- *
  */
+
+namespace Cws;
 
 class CwsShareCount
 {

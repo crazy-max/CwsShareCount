@@ -1,16 +1,29 @@
 # CwsShareCount
 
-CwsShareCount is a PHP class to get social share count for Delicious, Facebook, Google+, Linkedin, Pinterest, Reddit, StumbleUpon and Twitter.
+PHP class to get social share count for Delicious, Facebook, Google+, Linkedin, Pinterest, Reddit, StumbleUpon and Twitter.
 
-## Installation
+## Requirements
 
+* PHP >= 5.3
+* CwsDebug >= 1.8
+* CwsCurl >= 1.8
 * Enable the [php_curl](http://php.net/manual/en/book.curl.php) extension.
-* Download [CwsDump](https://github.com/crazy-max/CwsDump), [CwsDebug](https://github.com/crazy-max/CwsDebug) and [CwsCurl](https://github.com/crazy-max/CwsCurl).
-* Copy the ``class.cws.sharecount.php`` file in a folder on your server.
+
+## Installation with Composer
+
+```bash
+composer require crazy-max/cws-share-count
+```
+
+And download the code:
+
+```bash
+composer install # or update
+```
 
 ## Getting started
 
-See ``example.php`` file sample to help you.
+See `tests/test.php` file sample to help you.
 
 ## Example
 
