@@ -1,7 +1,7 @@
 {
   "name": "crazy-max/cws-share-count",
   "type":  "library",
-  "description": "Library to replace var_dump(), print_r() based on the Xdebug style.",
+  "description": "PHP class to get social share count for Delicious, Facebook, Google+, Linkedin, Pinterest, Reddit, StumbleUpon and Twitter.",
   "keywords": ["share", "social", "count", "delicious", "facebook", "googleplus", "linkedin", "reddit", "stumbleupon", "twitter"],
   "homepage": "https://github.com/crazy-max/CwsShareCount",
   "license": "LGPL",
