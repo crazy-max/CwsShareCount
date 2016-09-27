@@ -1,15 +1,14 @@
 <?php
 
 /**
- * CwsShareCount
- * 
- * @package CwsShareCount
+ * CwsShareCount.
+ *
  * @author Cr@zy
  * @copyright 2013-2015, Cr@zy
  * @license GNU LESSER GENERAL PUBLIC LICENSE
+ *
  * @link https://github.com/crazy-max/CwsShareCount
  */
-
 namespace Cws;
 
 class CwsShareCount
@@ -22,131 +21,154 @@ class CwsShareCount
     const SN_REDDIT = 'Reddit';
     const SN_STUMBLEUPON = 'StumbleUpon';
     const SN_TWITTER = 'Twitter';
-    
+
     /**
      * The last error message.
+     *
      * @var string
      */
     private $error;
-    
+
     /**
      * The cws debug instance.
+     *
      * @var CwsDebug
      */
     private $cwsDebug;
-    
+
     /**
      * The cws curl instance.
+     *
      * @var CwsCurl
      */
     private $cwsCurl;
-    
+
     public function __construct(CwsDebug $cwsDebug, CwsCurl $cwsCurl)
     {
         $this->cwsDebug = $cwsDebug;
         $this->cwsCurl = $cwsCurl;
     }
-    
+
     /**
      * Get all social share count.
+     *
      * @param string $url
+     *
      * @return array
      */
     public function getAll($url)
     {
-        $result = array();
-        
+        $result = [];
+
         foreach (self::getSocialNetworks() as $socialNetwork) {
             $result[$socialNetwork] = $this->getCount($url, $socialNetwork);
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Get delicious share count.
+     *
      * @param string $url
+     *
      * @return int
      */
     public function getDeliciousCount($url)
     {
         return $this->getCount($url, self::SN_DELICIOUS);
     }
-    
+
     /**
      * Get facebook share count.
+     *
      * @param string $url
+     *
      * @return int
      */
     public function getFacebookCount($url)
     {
         return $this->getCount($url, self::SN_FACEBOOK);
     }
-    
+
     /**
      * Get google plus share count.
+     *
      * @param string $url
+     *
      * @return int
      */
     public function getGooglePlusCount($url)
     {
         return $this->getCount($url, self::SN_GOOGLEPLUS);
     }
-    
+
     /**
      * Get linkedin share count.
+     *
      * @param string $url
+     *
      * @return int
      */
     public function getLinkedinCount($url)
     {
         return $this->getCount($url, self::SN_LINKEDIN);
     }
-    
+
     /**
      * Get pinterest share count.
+     *
      * @param string $url
+     *
      * @return int
      */
     public function getPinterestCount($url)
     {
         return $this->getCount($url, self::SN_PINTEREST);
     }
-    
+
     /**
      * Get reddit share count.
+     *
      * @param string $url
+     *
      * @return int
      */
     public function getRedditCount($url)
     {
         return $this->getCount($url, self::SN_REDDIT);
     }
-    
+
     /**
      * Get stumbleupon share count.
+     *
      * @param string $url
+     *
      * @return int
      */
     public function getStumbleuponCount($url)
     {
         return $this->getCount($url, self::SN_STUMBLEUPON);
     }
-    
+
     /**
      * Get twitter share count.
+     *
      * @param string $url
+     *
      * @return int
      */
     public function getTwitterCount($url)
     {
         return $this->getCount($url, self::SN_TWITTER);
     }
-    
+
     /**
      * Get social share count.
+     *
      * @param string $url
      * @param string $socialNetwork
+     *
      * @return int
      */
     private function getCount($url, $socialNetwork)
@@ -160,58 +182,59 @@ class CwsShareCount
             $this->cwsDebug->error($this->error);
             exit();
         }
-        
-        $this->cwsDebug->titleH2('get ' . $socialNetwork . ' count');
+
+        $this->cwsDebug->titleH2('get '.$socialNetwork.' count');
         $this->cwsDebug->labelValue('URL', $url);
-        
+
         $this->cwsCurl->reset();
-        $this->cwsCurl->addOption(CURLOPT_HTTPHEADER, array('Content-type:application/json'));
-        
+        $this->cwsCurl->addOption(CURLOPT_HTTPHEADER, ['Content-type:application/json']);
+
         $apiUrl = null;
         switch ($socialNetwork) {
             case self::SN_DELICIOUS:
-                $apiUrl = 'http://feeds.delicious.com/v2/json/urlinfo/data?url=' . urlencode($url);
+                $apiUrl = 'http://feeds.delicious.com/v2/json/urlinfo/data?url='.urlencode($url);
                 break;
             case self::SN_FACEBOOK:
-                $apiUrl = "http://graph.facebook.com/?id=" . urlencode($url);
+                $apiUrl = 'http://graph.facebook.com/?id='.urlencode($url);
                 break;
             case self::SN_GOOGLEPLUS:
                 $apiUrl = 'https://clients6.google.com/rpc?key=AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ';
                 $this->cwsCurl->setPostMethod();
-                $this->cwsCurl->addOption(CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' . $url . '","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]');
+                $this->cwsCurl->addOption(CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"'.$url.'","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]');
                 break;
             case self::SN_LINKEDIN:
-                $apiUrl = 'http://www.linkedin.com/countserv/count/share?url=' . urlencode($url);
+                $apiUrl = 'http://www.linkedin.com/countserv/count/share?url='.urlencode($url);
                 break;
             case self::SN_PINTEREST:
-                $apiUrl = 'http://api.pinterest.com/v1/urls/count.json?callback=receiveCount&url=' . urlencode($url);
+                $apiUrl = 'http://api.pinterest.com/v1/urls/count.json?callback=receiveCount&url='.urlencode($url);
                 break;
             case self::SN_REDDIT:
-                $apiUrl = 'http://buttons.reddit.com/button_info.json?url=' . urlencode($url);
+                $apiUrl = 'http://buttons.reddit.com/button_info.json?url='.urlencode($url);
                 break;
             case self::SN_STUMBLEUPON:
-                $apiUrl = 'http://www.stumbleupon.com/services/1.01/badge.getinfo?url=' . urlencode($url);
+                $apiUrl = 'http://www.stumbleupon.com/services/1.01/badge.getinfo?url='.urlencode($url);
                 break;
             case self::SN_TWITTER:
-                $apiUrl = 'http://urls.api.twitter.com/1/urls/count.json?url=' . urlencode($url);
+                $apiUrl = 'http://urls.api.twitter.com/1/urls/count.json?url='.urlencode($url);
                 break;
         }
-        
+
         $this->cwsDebug->labelValue('API URL', $apiUrl, CwsDebug::VERBOSE_REPORT);
-        
+
         $this->cwsCurl->setUrl($apiUrl);
         $this->cwsCurl->process();
-        
+
         if ($this->cwsCurl->getError()) {
             $this->error = $this->cwsCurl->getError();
             $this->cwsDebug->error($this->error);
+
             return false;
         }
-        
-        $content = str_replace("\n", "", $this->cwsCurl->getContent());
-        
+
+        $content = str_replace("\n", '', $this->cwsCurl->getContent());
+
         $this->cwsDebug->dump('Content fetched', $content, CwsDebug::VERBOSE_DEBUG);
-        
+
         $json = $this->cwsCurl->getContent();
         switch ($socialNetwork) {
             case self::SN_DELICIOUS:
@@ -228,16 +251,17 @@ class CwsShareCount
                 $json = substr($json, 0, -1);
                 break;
         }
-        
+
         $json = json_decode($json, true);
         if ($json == null || $json === false) {
             $this->error = 'Invalid Json...';
             $this->cwsDebug->error($this->error);
+
             return false;
         }
-        
+
         $this->cwsDebug->dump('Json', $json, CwsDebug::VERBOSE_REPORT);
-        
+
         $result = false;
         switch ($socialNetwork) {
             case self::SN_DELICIOUS:
@@ -285,19 +309,20 @@ class CwsShareCount
                 }
                 break;
         }
-        
+
         $this->cwsDebug->labelValue('Count', $result);
-        
+
         return $result;
     }
 
     /**
-     * Social networks list
+     * Social networks list.
+     *
      * @return array
      */
     private static function getSocialNetworks()
     {
-        return array(
+        return [
             self::SN_DELICIOUS,
             self::SN_FACEBOOK,
             self::SN_GOOGLEPLUS,
@@ -306,22 +331,25 @@ class CwsShareCount
             self::SN_REDDIT,
             self::SN_STUMBLEUPON,
             self::SN_TWITTER,
-        );
+        ];
     }
 
     /**
-     * Check if url is valid
+     * Check if url is valid.
+     *
      * @param $url
+     *
      * @return bool
      */
     private static function isValidUrl($url)
     {
-        return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url) 
+        return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url)
             || filter_var(filter_var($url, FILTER_SANITIZE_URL), FILTER_VALIDATE_URL);
     }
 
     /**
      * The last error.
+     *
      * @return string $error
      */
     public function getError()
