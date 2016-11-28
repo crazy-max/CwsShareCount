@@ -14,8 +14,8 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=5.3.0",
-    "crazy-max/cws-debug": ">=1.8",
-    "crazy-max/cws-curl": ">=1.8"
+    "crazy-max/cws-debug": ">=1.10",
+    "crazy-max/cws-curl": ">=1.9"
   },
   "autoload": {
     "psr-0": {
