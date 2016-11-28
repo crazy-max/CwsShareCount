@@ -58,7 +58,7 @@ class CwsShareCount
      */
     public function getAll($url)
     {
-        $result = [];
+        $result = array();
 
         foreach (self::getSocialNetworks() as $socialNetwork) {
             $result[$socialNetwork] = $this->getCount($url, $socialNetwork);
@@ -187,7 +187,7 @@ class CwsShareCount
         $this->cwsDebug->labelValue('URL', $url);
 
         $this->cwsCurl->reset();
-        $this->cwsCurl->addOption(CURLOPT_HTTPHEADER, ['Content-type:application/json']);
+        $this->cwsCurl->addOption(CURLOPT_HTTPHEADER, array('Content-type:application/json'));
 
         $apiUrl = null;
         switch ($socialNetwork) {
@@ -322,7 +322,7 @@ class CwsShareCount
      */
     private static function getSocialNetworks()
     {
-        return [
+        return array(
             self::SN_DELICIOUS,
             self::SN_FACEBOOK,
             self::SN_GOOGLEPLUS,
@@ -331,7 +331,7 @@ class CwsShareCount
             self::SN_REDDIT,
             self::SN_STUMBLEUPON,
             self::SN_TWITTER,
-        ];
+        );
     }
 
     /**
