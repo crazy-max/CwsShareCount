@@ -4,19 +4,13 @@
 [![Code Quality](https://img.shields.io/codacy/grade/b20799be23cd4d9e90ba6743591c681d.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/CwsShareCount)
 [![StyleCI](https://styleci.io/repos/10125005/shield?style=flat-square)](https://styleci.io/repos/10125005)
 [![Gemnasium](https://img.shields.io/gemnasium/crazy-max/CwsShareCount.svg?style=flat-square)](https://gemnasium.com/github.com/crazy-max/CwsShareCount)
+[![Donate Paypal](https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RE9HS4K9ZHC7G)
 
-# CwsShareCount
+## About
 
 PHP class to get social share count for Delicious, Facebook, Google+, Linkedin, Pinterest, Reddit, StumbleUpon and Twitter.
 
-## Requirements
-
-* PHP >= 5.3.0
-* CwsDebug >= 1.8
-* CwsCurl >= 1.8
-* Enable the [php_curl](http://php.net/manual/en/book.curl.php) extension.
-
-## Installation with Composer
+## Installation
 
 ```bash
 composer require crazy-max/cws-share-count
@@ -34,7 +28,7 @@ See `tests/test.php` file sample to help you.
 
 ## Example
 
-![](https://raw.github.com/crazy-max/CwsShareCount/master/example.png)
+![](.res/example.png)
 
 ## Methods
 
@@ -49,10 +43,14 @@ See `tests/test.php` file sample to help you.
 **getTwitterCount** - Get twitter social share count.<br />
 **getError** - Get the last error.
 
+## How can i help ?
+
+We welcome all kinds of contributions :raised_hands:!<br />
+The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
+Any funds donated will be used to help further development on this project! :gift_heart:
+
+[![Donate Paypal](.res/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RE9HS4K9ZHC7G)
+
 ## License
 
-LGPL. See ``LICENSE`` for more details.
-
-## More infos
-
-http://www.crazyws.fr/dev/classes-php/cwssharecount-recupere-le-nombre-de-partages-pour-reseaux-sociaux-SZXP0.html
+MIT. See `LICENSE` for more details.
