@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/travis/crazy-max/CwsShareCount/master.svg?style=flat-square)](https://travis-ci.org/crazy-max/CwsShareCount)
 [![Code Quality](https://img.shields.io/codacy/grade/b20799be23cd4d9e90ba6743591c681d.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/CwsShareCount)
 [![StyleCI](https://styleci.io/repos/10125005/shield?style=flat-square)](https://styleci.io/repos/10125005)
-[![Gemnasium](https://img.shields.io/gemnasium/crazy-max/CwsShareCount.svg?style=flat-square)](https://gemnasium.com/github.com/crazy-max/CwsShareCount)
+[![Libraries.io](https://img.shields.io/librariesio/github/crazy-max/CwsShareCount.svg?style=flat-square)](https://libraries.io/github/crazy-max/CwsShareCount)
 [![Beerpay](https://img.shields.io/beerpay/crazy-max/CwsShareCount.svg?style=flat-square)](https://beerpay.io/crazy-max/CwsShareCount)
 [![Donate Paypal](https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RE9HS4K9ZHC7G)
 
