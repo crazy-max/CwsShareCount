@@ -1,4 +1,5 @@
 {
+  "abandoned": true,
   "name": "crazy-max/cws-share-count",
   "type":  "library",
   "description": "PHP class to get social share count for Delicious, Facebook, Google+, Linkedin, Pinterest, Reddit, StumbleUpon and Twitter.",
